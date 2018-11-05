@@ -29,7 +29,7 @@ Implement `bmnav.BottomNav` in the `bottomNavigationBar` parameter in the Scaffo
 Widget build(BuildContext ctx) {
 	return Scaffold(
 		appBar: AppBar(title: Text('Bottom Nav Demo')),
-		body: md.Container(child: md.Text('Hello World')),
+		body: Container(child: Text('Hello World')),
 		bottomNavigationBar: bmnav.BottomNav(
 			index: 0,
 			onTap: (i) {},
