@@ -74,7 +74,6 @@ class BottomNavState extends md.State<BottomNav> {
 
 class BottomNavItem {
   final md.IconData icon;
-  
   BottomNavItem(this.icon);
 }
 
@@ -110,16 +109,17 @@ class BMNavItem extends md.StatelessWidget {
   md.Widget build(md.BuildContext context) {
     final bool selected = currentIndex == index;
 
-    final double size = iconStyle.size != null ? iconStyle.size : 24.0;
+    final double size = iconStyle != null &&
+      iconStyle.size != null ? iconStyle.size : 24.0;
 
-    final double selectedSize = selectedIconStyle.size != null ?
-      selectedIconStyle.size : 24.0;
+    final double selectedSize = selectedIconStyle != null &&
+      selectedIconStyle.size != null ? selectedIconStyle.size : 24.0;
 
-    final md.Color color = iconStyle.color != null ?
-      iconStyle.color : md.Colors.grey[600];
+    final md.Color color = iconStyle != null &&
+      iconStyle.color != null ? iconStyle.color : md.Colors.grey[700];
 
-    final md.Color selectedColor = selectedIconStyle.color != null ?
-      selectedIconStyle.color : md.Colors.blue;
+    final md.Color selectedColor = selectedIconStyle != null &&
+      selectedIconStyle.color != null ? selectedIconStyle.color : md.Colors.blue;
 
     return md.Expanded(
       child: md.InkResponse(

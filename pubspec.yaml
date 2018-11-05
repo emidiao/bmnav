@@ -1,6 +1,6 @@
 name: bmnav
 description: A Flutter implementation of the Bottom Navigation Bar with no labels.
-version: 0.1.0
+version: 0.2.0
 author: Edwin Jose <edwnjos99@gmail.com>
 homepage: https://github.com/edwnjos/bmnav
 
