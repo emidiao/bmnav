@@ -5,9 +5,7 @@ void main() {
   runApp(MaterialApp(
     title: 'Bottom Nav Demo',
     home: MainWidget(),
-    theme: ThemeData(
-      primaryColor: Color(0xFF13A9B7),
-    ),
+    theme: ThemeData(primaryColor: Colors.green),
   ));
 }
 
@@ -32,7 +30,8 @@ class MainWidgetState extends State<MainWidget> {
   Widget build(BuildContext ctx) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Bottom Nav Demo', style: TextStyle(color: Colors.black)), elevation: 2.0,
+        title: Text('Bottom Nav Demo', style: TextStyle(color: Colors.black)),
+        elevation: 2.0,
         backgroundColor: Colors.white,
       ),
       backgroundColor: Colors.white,
@@ -45,6 +44,8 @@ class MainWidgetState extends State<MainWidget> {
             currentScreen = screens[i];
           });
         },
+        iconStyle: bmnav.IconStyle(color: Colors.black),
+        selectedIconStyle: bmnav.IconStyle(color: Colors.green),
         items: [
           bmnav.BottomNavItem(Icons.home),
           bmnav.BottomNavItem(Icons.fitness_center),
