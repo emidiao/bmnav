@@ -7,15 +7,15 @@ class BottomNav extends md.StatefulWidget {
   final int index;
   final void Function(int i) onTap;
   final List<BottomNavItem> items;
-  final md.Color iconColor;
-  final md.Color iconSelectedColor;
+  final IconStyle iconStyle;
+  final IconStyle selectedIconStyle;
 
   BottomNav({
     this.index,
     this.onTap,
     this.items,
-    this.iconColor,
-    this.iconSelectedColor
+    this.iconStyle,
+    this.selectedIconStyle
   }) :
     assert(index != null),
     assert(onTap != null),
@@ -28,18 +28,10 @@ class BottomNav extends md.StatefulWidget {
 
 class BottomNavState extends md.State<BottomNav> {
   int currentIndex = 0;
-  md.Color iconColor = md.Colors.grey[600];
-  md.Color iconSelectedColor = md.Colors.blue;
 
   @override
   void initState() {
     currentIndex = widget.index;
-    if (widget.iconColor != null) {
-      iconColor = widget.iconColor;
-    }
-    if (widget.iconSelectedColor != null) {
-      iconSelectedColor = widget.iconSelectedColor;
-    }
     super.initState();
   }
 
@@ -56,8 +48,8 @@ class BottomNavState extends md.State<BottomNav> {
           index: widget.items.indexOf(b),
           onTap: () => onItemClick(widget.items.indexOf(b)),
           currentIndex: currentIndex,
-          iconColor: iconColor,
-          iconSelectedColor: iconSelectedColor,
+          iconStyle: widget.iconStyle,
+          selectedIconStyle: widget.selectedIconStyle,
         )).toList(),
       )
     );
@@ -71,6 +63,13 @@ class BottomNavState extends md.State<BottomNav> {
   }
 }
 
+class IconStyle {
+  double size;
+  md.Color color;
+
+  IconStyle({this.size, this.color});
+}
+
 class BottomNavItem {
   final md.IconData icon;
 
@@ -82,34 +81,45 @@ class BMNavItem extends md.StatelessWidget {
   final void Function() onTap;
   final int index;
   final int currentIndex;
-  final md.Color iconColor;
-  final md.Color iconSelectedColor;
+  final IconStyle iconStyle;
+  final IconStyle selectedIconStyle;
 
   BMNavItem({
     this.icon,
     this.onTap,
     this.index,
     this.currentIndex,
-    this.iconColor,
-    this.iconSelectedColor,
+    this.iconStyle,
+    this.selectedIconStyle,
   }) : 
     assert(icon != null),
     assert(onTap != null),
     assert(index != null),
-    assert(currentIndex != null),
-    assert(iconColor != null),
-    assert(iconSelectedColor != null);
+    assert(currentIndex != null);
 
   @override
   md.Widget build(md.BuildContext context) {
+    final bool selected = currentIndex == index;
+
+    final double size = iconStyle.size != null ? iconStyle.size : 24.0;
+
+    final double selectedSize = selectedIconStyle.size != null ?
+      selectedIconStyle.size : 24.0;
+
+    final md.Color color = iconStyle.color != null ? iconStyle.color :
+      md.Colors.grey[600];
+
+    final md.Color selectedColor = selectedIconStyle.color != null ?
+      selectedIconStyle.color : md.Colors.blue;
+
     return md.Expanded(
       child: md.InkResponse(
         child: md.Padding(
           padding: md.EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 16.0),
           child: md.Icon(
             icon,
-            size: 24.0,
-            color: currentIndex == index ? iconSelectedColor : iconColor
+            size: selected ? selectedSize : size,
+            color: selected ? color : selectedColor
           ),
         ),
         highlightColor: md.Theme.of(context).highlightColor,
