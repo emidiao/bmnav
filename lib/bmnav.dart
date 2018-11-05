@@ -7,6 +7,7 @@ class BottomNav extends md.StatefulWidget {
   final int index;
   final void Function(int i) onTap;
   final List<BottomNavItem> items;
+  final md.EdgeInsets padding;
   final IconStyle iconStyle;
   final IconStyle selectedIconStyle;
 
@@ -14,6 +15,7 @@ class BottomNav extends md.StatefulWidget {
     this.index,
     this.onTap,
     this.items,
+    this.padding,
     this.iconStyle,
     this.selectedIconStyle
   }) :
@@ -28,10 +30,14 @@ class BottomNav extends md.StatefulWidget {
 
 class BottomNavState extends md.State<BottomNav> {
   int currentIndex = 0;
+  md.EdgeInsets padding = md.EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 16.0);
 
   @override
   void initState() {
     currentIndex = widget.index;
+
+    padding = widget.padding != null ? widget.padding : padding;
+
     super.initState();
   }
 
@@ -40,17 +46,20 @@ class BottomNavState extends md.State<BottomNav> {
     return md.Material(
       elevation: 8.0,
       color: md.Colors.white,
-      child: md.Row(
-        mainAxisAlignment: md.MainAxisAlignment.spaceAround,
-        mainAxisSize: md.MainAxisSize.max,
-        children: widget.items.map((b) => BMNavItem(
-          icon: b.icon,
-          index: widget.items.indexOf(b),
-          onTap: () => onItemClick(widget.items.indexOf(b)),
-          currentIndex: currentIndex,
-          iconStyle: widget.iconStyle,
-          selectedIconStyle: widget.selectedIconStyle,
-        )).toList(),
+      child: md.Padding(
+        padding: padding,
+        child: md.Row(
+          mainAxisAlignment: md.MainAxisAlignment.spaceAround,
+          mainAxisSize: md.MainAxisSize.max,
+          children: widget.items.map((b) => BMNavItem(
+            icon: b.icon,
+            index: widget.items.indexOf(b),
+            onTap: () => onItemClick(widget.items.indexOf(b)),
+            currentIndex: currentIndex,
+            iconStyle: widget.iconStyle,
+            selectedIconStyle: widget.selectedIconStyle,
+          )).toList(),
+        )
       )
     );
   }
@@ -63,17 +72,17 @@ class BottomNavState extends md.State<BottomNav> {
   }
 }
 
+class BottomNavItem {
+  final md.IconData icon;
+  
+  BottomNavItem(this.icon);
+}
+
 class IconStyle {
   final double size;
   final md.Color color;
 
   IconStyle({this.size, this.color});
-}
-
-class BottomNavItem {
-  final md.IconData icon;
-
-  BottomNavItem(this.icon);
 }
 
 class BMNavItem extends md.StatelessWidget {
@@ -106,21 +115,18 @@ class BMNavItem extends md.StatelessWidget {
     final double selectedSize = selectedIconStyle.size != null ?
       selectedIconStyle.size : 24.0;
 
-    final md.Color color = iconStyle.color != null ? iconStyle.color :
-      md.Colors.grey[600];
+    final md.Color color = iconStyle.color != null ?
+      iconStyle.color : md.Colors.grey[600];
 
     final md.Color selectedColor = selectedIconStyle.color != null ?
       selectedIconStyle.color : md.Colors.blue;
 
     return md.Expanded(
       child: md.InkResponse(
-        child: md.Padding(
-          padding: md.EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 16.0),
-          child: md.Icon(
-            icon,
-            size: selected ? selectedSize : size,
-            color: selected ? selectedColor : color
-          ),
+        child: md.Icon(
+          icon,
+          size: selected ? selectedSize : size,
+          color: selected ? selectedColor : color
         ),
         highlightColor: md.Theme.of(context).highlightColor,
         splashColor: md.Theme.of(context).splashColor,
