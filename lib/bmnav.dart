@@ -64,8 +64,8 @@ class BottomNavState extends md.State<BottomNav> {
 }
 
 class IconStyle {
-  double size;
-  md.Color color;
+  final double size;
+  final md.Color color;
 
   IconStyle({this.size, this.color});
 }
@@ -119,7 +119,7 @@ class BMNavItem extends md.StatelessWidget {
           child: md.Icon(
             icon,
             size: selected ? selectedSize : size,
-            color: selected ? color : selectedColor
+            color: selected ? selectedColor : color
           ),
         ),
         highlightColor: md.Theme.of(context).highlightColor,
