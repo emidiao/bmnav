@@ -13,7 +13,7 @@ Add `bmanv` to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  bmnav: ^0.1.0
+  bmnav: ^0.3.0
 ```
 
 Import `bmnav` in your main.dart file:
@@ -54,14 +54,19 @@ If you found this project to be useful then please consider donating to help me 
 
 ## Props
 
-| Name              | Explanation                                | Default                                         |
-|-------------------|--------------------------------------------|-------------------------------------------------|
-| index             | starting index                             | 0                                               |
-| onTap             | callback when a bottom nav item is pressed | null                                            |
-| items             | bottom nav items                           | null                                            |
-| padding           | main padding                               | EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 16.0)       |
-| iconStyle         | bottom nav item icon default styling       | IconStyle(color: Colors.grey[700]), size: 24.0) |
-| selectedIconStyle | bottom nav item icon onSelected styling    | IconStyle(color: Colors.blue, size: 24.0)       |
+| Name              | Explanation                                | Default             |
+|-------------------|--------------------------------------------|---------------------|
+| index             | starting index                             | 0                   |
+| onTap             | callback when a bottom nav item is pressed | null                |
+| items             | bottom nav items                           | null                |
+| elevation         | elevation of bottom nav                    | 8.0                 |
+| showLabel         | shows or hides label                       | false               |
+| showSelectedLabel | shows or hides label when icon selected    | false               |
+| backgroundColor   | background color of bottom nav             | Colors.white        |
+| color             | default icon color                         | md.Colors.grey[700] |
+| selectedColor     | color of icon when selected                | md.Colors.blue      |
+| iconSize          | default icon size                          | 24.0                |
+| selectedIconSize  | size of the icon when selected             | 24.0                |
 
 
 ## Contributions

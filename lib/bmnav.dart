@@ -7,17 +7,29 @@ class BottomNav extends md.StatefulWidget {
   final int index;
   final void Function(int i) onTap;
   final List<BottomNavItem> items;
+  final bool showLabel;
+  final bool showSelectedLabel;
+  final double elevation;
+  final double iconSize;
+  final double selectedIconSize;
+  final md.Color color;
+  final md.Color selectedColor;
+  final md.Color backgroundColor;
   final md.EdgeInsets padding;
-  final IconStyle iconStyle;
-  final IconStyle selectedIconStyle;
 
   BottomNav({
     this.index,
     this.onTap,
     this.items,
+    this.showLabel,
+    this.showSelectedLabel,
+    this.elevation,
+    this.iconSize,
+    this.selectedIconSize,
+    this.color,
+    this.selectedColor,
+    this.backgroundColor,
     this.padding,
-    this.iconStyle,
-    this.selectedIconStyle
   }) :
     assert(index != null),
     assert(onTap != null),
@@ -30,13 +42,37 @@ class BottomNav extends md.StatefulWidget {
 
 class BottomNavState extends md.State<BottomNav> {
   int currentIndex = 0;
-  md.EdgeInsets padding = md.EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 16.0);
+  double elevation = 8.0;
+  double iconSize = 24.0;
+  double selectedIconSize = 24.0;
+  md.Color backgroundColor = md.Colors.white;
+  bool showLabel = false;
+  bool showSelectedLabel = false;
+  md.Color color = md.Colors.grey[700];
+  md.Color selectedColor = md.Colors.blue;
 
   @override
   void initState() {
-    currentIndex = widget.index;
+    elevation = widget.elevation != null ? widget.elevation : elevation;
 
-    padding = widget.padding != null ? widget.padding : padding;
+    iconSize = widget.iconSize != null ? widget.iconSize : iconSize;
+    
+    selectedIconSize = widget.selectedIconSize != null ?
+      widget.selectedIconSize : selectedIconSize;
+
+    backgroundColor = widget.backgroundColor != null ?
+      widget.backgroundColor : backgroundColor;
+
+    showLabel = widget.showLabel != null ? widget.showLabel : showLabel;
+
+    showSelectedLabel = widget.showSelectedLabel != null ?
+      widget.showSelectedLabel : showSelectedLabel;
+
+    color = widget.color != null ? widget.color : color;
+
+    selectedColor = widget.color != null ? widget.selectedColor : selectedColor;
+
+    currentIndex = widget.index;
 
     super.initState();
   }
@@ -44,23 +80,26 @@ class BottomNavState extends md.State<BottomNav> {
   @override
   md.Widget build(md.BuildContext context) {
     return md.Material(
-      elevation: 8.0,
-      color: md.Colors.white,
-      child: md.Padding(
-        padding: padding,
-        child: md.Row(
+      elevation: elevation,
+      color: backgroundColor,
+      child: md.Row(
           mainAxisAlignment: md.MainAxisAlignment.spaceAround,
           mainAxisSize: md.MainAxisSize.max,
-          children: widget.items.map((b) => BMNavItem(
-            icon: b.icon,
-            index: widget.items.indexOf(b),
-            onTap: () => onItemClick(widget.items.indexOf(b)),
-            currentIndex: currentIndex,
-            iconStyle: widget.iconStyle,
-            selectedIconStyle: widget.selectedIconStyle,
-          )).toList(),
+          children: widget.items.map((b) { 
+            final int i = widget.items.indexOf(b);
+
+            final String label = showLabel ? b.label :
+              showSelectedLabel && i == currentIndex ? b.label : null;
+ 
+            return BMNavItem(
+              icon: b.icon,
+              iconSize: i == currentIndex ? selectedIconSize : iconSize,
+              label: label,
+              onTap: () => onItemClick(i),
+              color: i == currentIndex ? selectedColor : color,
+            );
+          }).toList(),
         )
-      )
     );
   }
 
@@ -74,59 +113,47 @@ class BottomNavState extends md.State<BottomNav> {
 
 class BottomNavItem {
   final md.IconData icon;
-  BottomNavItem(this.icon);
-}
+  final String label;
 
-class IconStyle {
-  final double size;
-  final md.Color color;
-
-  IconStyle({this.size, this.color});
+  BottomNavItem(this.icon, {this.label});
 }
 
 class BMNavItem extends md.StatelessWidget {
   final md.IconData icon;
+  final double iconSize;
+  final String label;
   final void Function() onTap;
-  final int index;
-  final int currentIndex;
-  final IconStyle iconStyle;
-  final IconStyle selectedIconStyle;
+  final md.Color color;
 
   BMNavItem({
     this.icon,
+    this.iconSize,
+    this.label,
     this.onTap,
-    this.index,
-    this.currentIndex,
-    this.iconStyle,
-    this.selectedIconStyle,
+    this.color,
   }) : 
     assert(icon != null),
-    assert(onTap != null),
-    assert(index != null),
-    assert(currentIndex != null);
+    assert(iconSize != null),
+    assert(color != null),
+    assert(onTap != null);
 
   @override
   md.Widget build(md.BuildContext context) {
-    final bool selected = currentIndex == index;
-
-    final double size = iconStyle != null &&
-      iconStyle.size != null ? iconStyle.size : 24.0;
-
-    final double selectedSize = selectedIconStyle != null &&
-      selectedIconStyle.size != null ? selectedIconStyle.size : 24.0;
-
-    final md.Color color = iconStyle != null &&
-      iconStyle.color != null ? iconStyle.color : md.Colors.grey[700];
-
-    final md.Color selectedColor = selectedIconStyle != null &&
-      selectedIconStyle.color != null ? selectedIconStyle.color : md.Colors.blue;
+    double tbPadding = label != null ? (44-iconSize)/2 : (56-iconSize)/2;
 
     return md.Expanded(
       child: md.InkResponse(
-        child: md.Icon(
-          icon,
-          size: selected ? selectedSize : size,
-          color: selected ? selectedColor : color
+        child: md.Padding(
+          padding: md.EdgeInsets.fromLTRB(0.0, tbPadding, 0.0, tbPadding),
+          child: md.Column(
+            mainAxisSize: md.MainAxisSize.min,
+            children: <md.Widget>[
+              md.Icon(icon, size: iconSize, color: color),
+              label != null ? md.Text(
+                label, style: md.TextStyle(fontSize: 12.0, color: color)
+              ) : md.Container()
+            ]
+          )
         ),
         highlightColor: md.Theme.of(context).highlightColor,
         splashColor: md.Theme.of(context).splashColor,

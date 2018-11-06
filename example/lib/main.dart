@@ -44,13 +44,11 @@ class MainWidgetState extends State<MainWidget> {
             currentScreen = screens[i];
           });
         },
-        iconStyle: bmnav.IconStyle(color: Colors.black),
-        selectedIconStyle: bmnav.IconStyle(color: Colors.green),
         items: [
-          bmnav.BottomNavItem(Icons.home),
-          bmnav.BottomNavItem(Icons.fitness_center),
-          bmnav.BottomNavItem(Icons.person),
-          bmnav.BottomNavItem(Icons.view_headline)
+          bmnav.BottomNavItem(Icons.home, label: 'Home'),
+          bmnav.BottomNavItem(Icons.fitness_center, label: 'Workouts'),
+          bmnav.BottomNavItem(Icons.person, label: 'Account'),
+          bmnav.BottomNavItem(Icons.view_headline, label: 'Settings')
         ],
       ),
     );
