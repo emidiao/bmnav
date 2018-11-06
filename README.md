@@ -13,7 +13,7 @@ Add `bmanv` to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  bmnav: ^0.3.0
+  bmnav: ^0.3.2
 ```
 
 Import `bmnav` in your main.dart file:
