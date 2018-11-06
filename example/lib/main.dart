@@ -38,6 +38,7 @@ class MainWidgetState extends State<MainWidget> {
       body: PageStorage(child: currentScreen, bucket: bucket),
       bottomNavigationBar: bmnav.BottomNav(
         index: currentTab,
+        showSelectedLabel: true,
         onTap: (i) {
           setState(() {
             currentTab = i;

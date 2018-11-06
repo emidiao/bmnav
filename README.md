@@ -5,7 +5,11 @@ A highly flexible Flutter implementation of the Bottom Navigation Bar.
 [![Pub](https://img.shields.io/pub/v/bmnav.svg)](https://pub.dartlang.org/packages/bmnav)
 [![PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.me/edwnjos)
 
-![Overview](https://raw.githubusercontent.com/edwnjos/bmnav/master/example/example.gif)
+![BottomNavigationBar with label](https://raw.githubusercontent.com/edwnjos/bmnav/master/screenshots/with-label.gif)
+
+![BottomNavigationBar with label when selected](https://raw.githubusercontent.com/edwnjos/bmnav/master/screenshots/with-select-label.gif)
+
+![BottomNavigationBar without label](https://raw.githubusercontent.com/edwnjos/bmnav/master/screenshots/without-label.gif)
 
 ## Get Started
 
@@ -13,7 +17,7 @@ Add `bmanv` to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  bmnav: ^0.3.2
+  bmnav: ^0.3.3
 ```
 
 Import `bmnav` in your main.dart file:
@@ -46,12 +50,6 @@ Widget build(BuildContext ctx) {
 
 You can find a fully fledged example with navigation and custom styles [here](https://github.com/edwnjos/bmnav/blob/master/example/lib/main.dart).
 
-## Support
-
-If you found this project to be useful then please consider donating to help me continue maintaining this project and create new projects. :)
-
-[![Paypal Donate Button](https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-150px.png)](https://www.paypal.me/edwnjos)
-
 ## Props
 
 | Name              | Explanation                                | Default             |
@@ -72,3 +70,9 @@ If you found this project to be useful then please consider donating to help me 
 ## Contributions
 
 Feel free to contribute to this project.
+
+## Support
+
+If you found this project to be useful then please consider donating to help me continue maintaining this project and create new projects. :)
+
+[![Paypal Donate Button](https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-150px.png)](https://www.paypal.me/edwnjos)
