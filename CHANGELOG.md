@@ -1,3 +1,6 @@
+## 0.3.1
+* Update README
+
 ## 0.3.0
 * Added `elevation` parameter.
 * Added `color` parameter.

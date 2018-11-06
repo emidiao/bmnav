@@ -1,6 +1,6 @@
 # bmnav
 
-A Flutter implementation of the Bottom Navigation Bar with no labels. 
+A highly flexible Flutter implementation of the Bottom Navigation Bar. 
 
 [![Pub](https://img.shields.io/pub/v/bmnav.svg)](https://pub.dartlang.org/packages/bmnav)
 [![PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.me/edwnjos)
