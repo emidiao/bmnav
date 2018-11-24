@@ -1,3 +1,6 @@
+## 0.3.4
+* Removed `showLabel` parameter
+
 ## 0.3.1
 * Update README
 

@@ -7,13 +7,10 @@ class BottomNav extends md.StatefulWidget {
   final int index;
   final void Function(int i) onTap;
   final List<BottomNavItem> items;
-  final bool showLabel;
   final bool showSelectedLabel;
   final double elevation;
-  final double iconSize;
-  final double selectedIconSize;
-  final md.Color color;
-  final md.Color selectedColor;
+  final IconStyle iconStyle;
+  final IconStyle selectedIconStyle;
   final md.Color backgroundColor;
   final md.TextStyle textStyle;
   final md.TextStyle selectedTextStyle;
@@ -22,13 +19,10 @@ class BottomNav extends md.StatefulWidget {
     this.index,
     this.onTap,
     this.items,
-    this.showLabel,
     this.showSelectedLabel,
     this.elevation,
-    this.iconSize,
-    this.selectedIconSize,
-    this.color,
-    this.selectedColor,
+    this.iconStyle,
+    this.selectedIconStyle,
     this.backgroundColor,
     this.textStyle,
     this.selectedTextStyle,
@@ -45,12 +39,9 @@ class BottomNav extends md.StatefulWidget {
 class BottomNavState extends md.State<BottomNav> {
   int currentIndex = 0;
   double elevation = 8.0;
-  double iconSize = 24.0;
-  double selectedIconSize = 24.0;
   md.Color backgroundColor = md.Colors.white;
   bool showSelectedLabel = false;
-  md.Color color = md.Colors.grey[700];
-  md.Color selectedColor = md.Colors.blue;
+  // md.Selec
   md.TextStyle textStyle;
   md.TextStyle selectedTextStyle;
 
@@ -58,23 +49,17 @@ class BottomNavState extends md.State<BottomNav> {
   void initState() {
     elevation = widget.elevation ?? elevation;
 
-    iconSize = widget.iconSize ?? iconSize;
-    
-    selectedIconSize = widget.selectedIconSize ?? selectedIconSize;
-
     backgroundColor = widget.backgroundColor ?? backgroundColor;
 
     showSelectedLabel = widget.showSelectedLabel ?? showSelectedLabel;
 
-    color = widget.color ?? color;
-
-    selectedColor = widget.selectedColor ?? selectedColor;
-
     currentIndex = widget.index;
 
-    textStyle = widget.textStyle ?? md.TextStyle(color: color, fontSize: 12.0);
+    textStyle = widget.textStyle ??
+      md.TextStyle(color: md.Colors.grey[700], fontSize: 12.0);
 
-    selectedTextStyle = widget.selectedTextStyle ?? md.TextStyle(color: selectedColor, fontSize: 12.0);
+    selectedTextStyle = widget.selectedTextStyle ??
+      md.TextStyle(color: md.Theme.of(context).primaryColor, fontSize: 12.0);
 
     super.initState();
   }
@@ -95,13 +80,20 @@ class BottomNavState extends md.State<BottomNav> {
               label = showSelectedLabel && i == currentIndex ? b.label : null;
             }
 
+            final double size = i == currentIndex ?
+              widget.selectedIconStyle.size: widget.iconStyle.size;
+
+            final md.Color color = i == currentIndex ?
+              widget.selectedIconStyle.color ?? md.Theme.of(context).primaryColor
+              : widget.iconStyle.color;
+
             return BMNavItem(
               icon: b.icon,
-              iconSize: i == currentIndex ? selectedIconSize : iconSize,
+              iconSize: size,
               label: label,
               onTap: () => onItemClick(i),
               textStyle: i == currentIndex ? selectedTextStyle : textStyle,
-              color: i == currentIndex ? selectedColor : color,
+              color: color,
             );
           }).toList(),
         )
@@ -121,6 +113,16 @@ class BottomNavItem {
   final String label;
 
   BottomNavItem(this.icon, {this.label});
+}
+
+class IconStyle {
+  final double size;
+  final md.Color color;
+
+  IconStyle({
+    this.size = 24.0,
+    this.color = const md.Color(0xFF616161)
+  });
 }
 
 class BMNavItem extends md.StatelessWidget {
