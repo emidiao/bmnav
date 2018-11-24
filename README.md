@@ -1,6 +1,6 @@
 # bmnav
 
-A highly flexible Flutter implementation of the Bottom Navigation Bar. 
+A very flexible Flutter implementation of the Bottom Navigation Bar. 
 
 [![Pub](https://img.shields.io/pub/v/bmnav.svg)](https://pub.dartlang.org/packages/bmnav)
 [![PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.me/edwnjos)
@@ -52,19 +52,20 @@ You can find a fully fledged example with navigation and custom styles [here](ht
 
 ## Props
 
-| Name              | Explanation                                | Default             |
-|-------------------|--------------------------------------------|---------------------|
-| index             | starting index                             | 0                   |
-| onTap             | callback when a bottom nav item is pressed | null                |
-| items             | bottom nav items                           | null                |
-| elevation         | elevation of bottom nav                    | 8.0                 |
-| showLabel         | shows or hides label                       | false               |
-| showSelectedLabel | shows or hides label when icon selected    | false               |
-| backgroundColor   | background color of bottom nav             | Colors.white        |
-| color             | default icon color                         | md.Colors.grey[700] |
-| selectedColor     | color of icon when selected                | md.Colors.blue      |
-| iconSize          | default icon size                          | 24.0                |
-| selectedIconSize  | size of the icon when selected             | 24.0                |
+| Name              | Explanation                                | Default                          |
+|-------------------|--------------------------------------------|----------------------------------|
+| index             | starting index                             | 0                                |
+| onTap             | callback when a bottom nav item is pressed | null                             |
+| items             | bottom nav items                           | null                             |
+| elevation         | elevation of bottom nav                    | 8.0                              |
+| showSelectedLabel | shows or hides label when icon selected    | false                            |
+| backgroundColor   | background color of bottom nav             | Colors.white                     |
+| color             | default icon color                         | md.Colors.grey[700]              |
+| selectedColor     | color of icon when selected                | md.Colors.blue                   |
+| iconSize          | default icon size                          | 24.0                             |
+| selectedIconSize  | size of the icon when selected             | 24.0                             |
+| textStyle         | default text style                         | size: 12.0, color: color         |
+| selectedTextStyle | text style when selected                   | size: 12.0, color: selectedColor |
 
 
 ## Contributions

@@ -15,7 +15,8 @@ class BottomNav extends md.StatefulWidget {
   final md.Color color;
   final md.Color selectedColor;
   final md.Color backgroundColor;
-  final md.EdgeInsets padding;
+  final md.TextStyle textStyle;
+  final md.TextStyle selectedTextStyle;
 
   BottomNav({
     this.index,
@@ -29,7 +30,8 @@ class BottomNav extends md.StatefulWidget {
     this.color,
     this.selectedColor,
     this.backgroundColor,
-    this.padding,
+    this.textStyle,
+    this.selectedTextStyle,
   }) :
     assert(index != null),
     assert(onTap != null),
@@ -46,33 +48,33 @@ class BottomNavState extends md.State<BottomNav> {
   double iconSize = 24.0;
   double selectedIconSize = 24.0;
   md.Color backgroundColor = md.Colors.white;
-  bool showLabel = false;
   bool showSelectedLabel = false;
   md.Color color = md.Colors.grey[700];
   md.Color selectedColor = md.Colors.blue;
+  md.TextStyle textStyle;
+  md.TextStyle selectedTextStyle;
 
   @override
   void initState() {
-    elevation = widget.elevation != null ? widget.elevation : elevation;
+    elevation = widget.elevation ?? elevation;
 
-    iconSize = widget.iconSize != null ? widget.iconSize : iconSize;
+    iconSize = widget.iconSize ?? iconSize;
     
-    selectedIconSize = widget.selectedIconSize != null ?
-      widget.selectedIconSize : selectedIconSize;
+    selectedIconSize = widget.selectedIconSize ?? selectedIconSize;
 
-    backgroundColor = widget.backgroundColor != null ?
-      widget.backgroundColor : backgroundColor;
+    backgroundColor = widget.backgroundColor ?? backgroundColor;
 
-    showLabel = widget.showLabel != null ? widget.showLabel : showLabel;
+    showSelectedLabel = widget.showSelectedLabel ?? showSelectedLabel;
 
-    showSelectedLabel = widget.showSelectedLabel != null ?
-      widget.showSelectedLabel : showSelectedLabel;
+    color = widget.color ?? color;
 
-    color = widget.color != null ? widget.color : color;
-
-    selectedColor = widget.color != null ? widget.selectedColor : selectedColor;
+    selectedColor = widget.selectedColor ?? selectedColor;
 
     currentIndex = widget.index;
+
+    textStyle = widget.textStyle ?? md.TextStyle(color: color, fontSize: 12.0);
+
+    selectedTextStyle = widget.selectedTextStyle ?? md.TextStyle(color: selectedColor, fontSize: 12.0);
 
     super.initState();
   }
@@ -88,14 +90,17 @@ class BottomNavState extends md.State<BottomNav> {
           children: widget.items.map((b) { 
             final int i = widget.items.indexOf(b);
 
-            final String label = showLabel ? b.label :
-              showSelectedLabel && i == currentIndex ? b.label : null;
- 
+            String label = b.label;
+            if (showSelectedLabel) {
+              label = showSelectedLabel && i == currentIndex ? b.label : null;
+            }
+
             return BMNavItem(
               icon: b.icon,
               iconSize: i == currentIndex ? selectedIconSize : iconSize,
               label: label,
               onTap: () => onItemClick(i),
+              textStyle: i == currentIndex ? selectedTextStyle : textStyle,
               color: i == currentIndex ? selectedColor : color,
             );
           }).toList(),
@@ -124,6 +129,7 @@ class BMNavItem extends md.StatelessWidget {
   final String label;
   final void Function() onTap;
   final md.Color color;
+  final md.TextStyle textStyle;
 
   BMNavItem({
     this.icon,
@@ -131,6 +137,7 @@ class BMNavItem extends md.StatelessWidget {
     this.label,
     this.onTap,
     this.color,
+    this.textStyle,
   }) : 
     assert(icon != null),
     assert(iconSize != null),
@@ -139,7 +146,7 @@ class BMNavItem extends md.StatelessWidget {
 
   @override
   md.Widget build(md.BuildContext context) {
-    double tbPadding = label != null ? (44-iconSize)/2 : (56-iconSize)/2;
+    double tbPadding = label != null ? ((56-textStyle.fontSize)-iconSize)/2 : (56-iconSize)/2;
 
     return md.Expanded(
       child: md.InkResponse(
@@ -149,9 +156,7 @@ class BMNavItem extends md.StatelessWidget {
             mainAxisSize: md.MainAxisSize.min,
             children: <md.Widget>[
               md.Icon(icon, size: iconSize, color: color),
-              label != null ? md.Text(
-                label, style: md.TextStyle(fontSize: 12.0, color: color)
-              ) : md.Container()
+              label != null ? md.Text(label, style: textStyle) : md.Container()
             ]
           )
         ),
