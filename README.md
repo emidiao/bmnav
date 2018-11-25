@@ -35,8 +35,6 @@ Widget build(BuildContext ctx) {
 		appBar: AppBar(title: Text('Bottom Nav Demo')),
 		body: Container(child: Text('Hello World')),
 		bottomNavigationBar: bmnav.BottomNav(
-			index: 0,
-			onTap: (i) {},
 			items: [
 				bmnav.BottomNavItem(Icons.home),
 				bmnav.BottomNavItem(Icons.fitness_center),
