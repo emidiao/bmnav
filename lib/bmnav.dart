@@ -25,8 +25,6 @@ class BottomNav extends md.StatefulWidget {
     this.color = md.Colors.white,
     this.labelStyle,
   }) :
-    assert(index != null),
-    assert(onTap != null),
     assert(items != null),
     assert(items.length >= 2);
 
@@ -35,13 +33,13 @@ class BottomNav extends md.StatefulWidget {
 }
 
 class BottomNavState extends md.State<BottomNav> {
-  int currentIndex = 0;
+  int currentIndex;
   IconStyle iconStyle;
   LabelStyle labelStyle;
 
   @override
   void initState() {
-    currentIndex = widget.index;
+    currentIndex = widget.index ?? 0;
     iconStyle = widget.iconStyle ?? IconStyle();
     labelStyle = widget.labelStyle ?? LabelStyle();
     super.initState();
@@ -76,7 +74,7 @@ class BottomNavState extends md.State<BottomNav> {
     setState(() {
       currentIndex = i;
     });
-    widget.onTap(i);
+    if (widget.onTap != null) widget.onTap(i);
   }
 
   parseLabel(String label, LabelStyle style, bool selected) {
@@ -225,8 +223,10 @@ class BMNavItem extends md.StatelessWidget {
 
   @override
   md.Widget build(md.BuildContext context) {
+
     return md.Expanded(
       child: md.InkResponse(
+        key: key,
         child: md.Padding(
           padding: getPadding(),
           child: md.Column(
