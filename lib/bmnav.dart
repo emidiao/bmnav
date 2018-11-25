@@ -3,29 +3,27 @@
 
 import 'package:flutter/material.dart' as md;
 
+final md.Color defaultColor = md.Colors.grey[700];
+
+final md.Color defaultOnSelectColor = md.Colors.blue;
+
 class BottomNav extends md.StatefulWidget {
   final int index;
   final void Function(int i) onTap;
   final List<BottomNavItem> items;
-  final bool showSelectedLabel;
   final double elevation;
   final IconStyle iconStyle;
-  final IconStyle selectedIconStyle;
-  final md.Color backgroundColor;
-  final md.TextStyle textStyle;
-  final md.TextStyle selectedTextStyle;
+  final md.Color color;
+  final LabelStyle labelStyle;
 
   BottomNav({
     this.index,
     this.onTap,
     this.items,
-    this.showSelectedLabel,
-    this.elevation,
+    this.elevation = 8.0,
     this.iconStyle,
-    this.selectedIconStyle,
-    this.backgroundColor,
-    this.textStyle,
-    this.selectedTextStyle,
+    this.color = md.Colors.white,
+    this.labelStyle,
   }) :
     assert(index != null),
     assert(onTap != null),
@@ -38,62 +36,36 @@ class BottomNav extends md.StatefulWidget {
 
 class BottomNavState extends md.State<BottomNav> {
   int currentIndex = 0;
-  double elevation = 8.0;
-  md.Color backgroundColor = md.Colors.white;
-  bool showSelectedLabel = false;
-  // md.Selec
-  md.TextStyle textStyle;
-  md.TextStyle selectedTextStyle;
+  IconStyle iconStyle;
+  LabelStyle labelStyle;
 
   @override
   void initState() {
-    elevation = widget.elevation ?? elevation;
-
-    backgroundColor = widget.backgroundColor ?? backgroundColor;
-
-    showSelectedLabel = widget.showSelectedLabel ?? showSelectedLabel;
-
     currentIndex = widget.index;
-
-    textStyle = widget.textStyle ??
-      md.TextStyle(color: md.Colors.grey[700], fontSize: 12.0);
-
-    selectedTextStyle = widget.selectedTextStyle ??
-      md.TextStyle(color: md.Theme.of(context).primaryColor, fontSize: 12.0);
-
+    iconStyle = widget.iconStyle ?? IconStyle();
+    labelStyle = widget.labelStyle ?? LabelStyle();
     super.initState();
   }
 
   @override
   md.Widget build(md.BuildContext context) {
     return md.Material(
-      elevation: elevation,
-      color: backgroundColor,
+      elevation: widget.elevation,
+      color: widget.color,
       child: md.Row(
           mainAxisAlignment: md.MainAxisAlignment.spaceAround,
           mainAxisSize: md.MainAxisSize.max,
           children: widget.items.map((b) { 
             final int i = widget.items.indexOf(b);
-
-            String label = b.label;
-            if (showSelectedLabel) {
-              label = showSelectedLabel && i == currentIndex ? b.label : null;
-            }
-
-            final double size = i == currentIndex ?
-              widget.selectedIconStyle.size: widget.iconStyle.size;
-
-            final md.Color color = i == currentIndex ?
-              widget.selectedIconStyle.color ?? md.Theme.of(context).primaryColor
-              : widget.iconStyle.color;
+            final bool selected = i == currentIndex;
 
             return BMNavItem(
               icon: b.icon,
-              iconSize: size,
-              label: label,
+              iconSize: selected ? iconStyle.getSelectedSize() : iconStyle.getSize(),
+              label: parseLabel(b.label, labelStyle, selected),
               onTap: () => onItemClick(i),
-              textStyle: i == currentIndex ? selectedTextStyle : textStyle,
-              color: color,
+              textStyle: selected ? labelStyle.getOnSelectTextStyle() : labelStyle.getTextStyle(),
+              color: selected ? iconStyle.getSelectedColor() : iconStyle.getColor(),
             );
           }).toList(),
         )
@@ -106,6 +78,18 @@ class BottomNavState extends md.State<BottomNav> {
     });
     widget.onTap(i);
   }
+
+  parseLabel(String label, LabelStyle style, bool selected) {
+    if (!style.isVisible()) {
+      return null;
+    }
+
+    if (style.isShowOnSelect()) {
+      return selected ? label : null;
+    }
+
+    return label;
+  }
 }
 
 class BottomNavItem {
@@ -115,14 +99,107 @@ class BottomNavItem {
   BottomNavItem(this.icon, {this.label});
 }
 
+class LabelStyle {
+  final bool visible;
+  final bool showOnSelect;
+  final md.TextStyle textStyle;
+  final md.TextStyle onSelectTextStyle;
+
+  LabelStyle({
+    this.visible,
+    this.showOnSelect,
+    this.textStyle,
+    this.onSelectTextStyle
+  });
+
+  isVisible() {
+    return visible ?? true;
+  }
+
+  isShowOnSelect() {
+    return showOnSelect ?? false;
+  }
+
+  // getTextStyle returns `textStyle` with default `fontSize` and
+  // `color` values if not provided. if `textStyle` is null then
+  // returns default text style
+  getTextStyle() {
+    if (textStyle != null) {
+      return md.TextStyle(
+        inherit: textStyle.inherit,
+        color: textStyle.color ?? defaultOnSelectColor,
+        fontSize: textStyle.fontSize ?? 12.0,
+        fontWeight: textStyle.fontWeight,
+        fontStyle: textStyle.fontStyle,
+        letterSpacing: textStyle.letterSpacing,
+        wordSpacing: textStyle.wordSpacing,
+        textBaseline: textStyle.textBaseline,
+        height: textStyle.height,
+        locale: textStyle.locale,
+        foreground: textStyle.foreground,
+        background: textStyle.background,
+        decoration: textStyle.decoration,
+        decorationColor: textStyle.decorationColor,
+        decorationStyle: textStyle.decorationStyle,
+        debugLabel: textStyle.debugLabel,
+        fontFamily: textStyle.fontFamily,
+      );
+    }
+    return md.TextStyle(color: defaultColor, fontSize: 12.0);
+  }
+
+  // getOnSelectTextStyle returns `onSelectTextStyle` with
+  // default `fontSize` and `color` values if not provided. if
+  // `onSelectTextStyle` is null then returns default text style
+  getOnSelectTextStyle() {
+    if (onSelectTextStyle != null) {
+      return md.TextStyle(
+        inherit: onSelectTextStyle.inherit,
+        color: onSelectTextStyle.color ?? defaultOnSelectColor,
+        fontSize: onSelectTextStyle.fontSize ?? 12.0,
+        fontWeight: onSelectTextStyle.fontWeight,
+        fontStyle: onSelectTextStyle.fontStyle,
+        letterSpacing: onSelectTextStyle.letterSpacing,
+        wordSpacing: onSelectTextStyle.wordSpacing,
+        textBaseline: onSelectTextStyle.textBaseline,
+        height: onSelectTextStyle.height,
+        locale: onSelectTextStyle.locale,
+        foreground: onSelectTextStyle.foreground,
+        background: onSelectTextStyle.background,
+        decoration: onSelectTextStyle.decoration,
+        decorationColor: onSelectTextStyle.decorationColor,
+        decorationStyle: onSelectTextStyle.decorationStyle,
+        debugLabel: onSelectTextStyle.debugLabel,
+        fontFamily: onSelectTextStyle.fontFamily,
+      );
+    }
+    return md.TextStyle(color: defaultOnSelectColor, fontSize: 12.0);
+  }
+}
+
 class IconStyle {
   final double size;
+  final double onSelectSize;
   final md.Color color;
+  final md.Color onSelectColor;
 
-  IconStyle({
-    this.size = 24.0,
-    this.color = const md.Color(0xFF616161)
-  });
+  IconStyle({this.size, this.onSelectSize, this.color, this.onSelectColor});
+
+  getSize() {
+    return size ?? 24.0;
+  }
+
+  getSelectedSize() {
+    return onSelectSize ?? 24.0;
+  }
+
+  getColor() {
+    return color ?? defaultColor;
+  }
+
+  getSelectedColor() {
+    return onSelectColor ?? defaultOnSelectColor;
+  }
 }
 
 class BMNavItem extends md.StatelessWidget {
@@ -148,12 +225,10 @@ class BMNavItem extends md.StatelessWidget {
 
   @override
   md.Widget build(md.BuildContext context) {
-    double tbPadding = label != null ? ((56-textStyle.fontSize)-iconSize)/2 : (56-iconSize)/2;
-
     return md.Expanded(
       child: md.InkResponse(
         child: md.Padding(
-          padding: md.EdgeInsets.fromLTRB(0.0, tbPadding, 0.0, tbPadding),
+          padding: getPadding(),
           child: md.Column(
             mainAxisSize: md.MainAxisSize.min,
             children: <md.Widget>[
@@ -168,5 +243,17 @@ class BMNavItem extends md.StatelessWidget {
         onTap: () => onTap(),
       )
     );
-  }  
+  }
+
+  // getPadding returns the padding after adjusting the top and bottom
+  // padding based on the fontsize and iconSize.
+  getPadding() {
+    if (label != null) {
+      final double p = ((56-textStyle.fontSize)-iconSize)/2;
+      return md.EdgeInsets.fromLTRB(0.0, p, 0.0, p);
+    } 
+    return md.EdgeInsets.fromLTRB(
+      0.0, (56-iconSize)/2, 0.0, (56-iconSize)/2
+    );
+  }
 }

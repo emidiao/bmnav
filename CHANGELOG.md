@@ -1,5 +1,12 @@
 ## 0.3.4
+* Added `iconStyle` paramater
+* Added `labelStyle` parameter
 * Removed `showLabel` parameter
+* Removed `showSelectedLabel` parameter.
+* Removed `selectedColor` parameter.
+* Removed `iconSize` parameter.
+* Removed `selectedIconSize` parameter.
+* Removed `backgroundColor` parameter.
 
 ## 0.3.1
 * Update README

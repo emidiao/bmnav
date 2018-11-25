@@ -52,21 +52,15 @@ You can find a fully fledged example with navigation and custom styles [here](ht
 
 ## Props
 
-| Name              | Explanation                                | Default                          |
-|-------------------|--------------------------------------------|----------------------------------|
-| index             | starting index                             | 0                                |
-| onTap             | callback when a bottom nav item is pressed | null                             |
-| items             | bottom nav items                           | null                             |
-| elevation         | elevation of bottom nav                    | 8.0                              |
-| showSelectedLabel | shows or hides label when icon selected    | false                            |
-| backgroundColor   | background color of bottom nav             | Colors.white                     |
-| color             | default icon color                         | md.Colors.grey[700]              |
-| selectedColor     | color of icon when selected                | md.Colors.blue                   |
-| iconSize          | default icon size                          | 24.0                             |
-| selectedIconSize  | size of the icon when selected             | 24.0                             |
-| textStyle         | default text style                         | size: 12.0, color: color         |
-| selectedTextStyle | text style when selected                   | size: 12.0, color: selectedColor |
-
+| Name              | Explanation                                                                       | Default                          |
+|-------------------|----------------------------------------------------------------------------|----------------------------------|
+| index             | starting index                                                             | 0                                |
+| onTap             | callback when a bottom nav item is pressed                                 | null                             |
+| items             | bottom nav items                                                           | null                             |
+| elevation         | elevation of bottom nav                                                    | 8.0                              |
+| color             | background color                                                           | Colors.white                     |
+| iconStyle         | icon styles (`size`, `onSelectSize`, `color`, `onSelectColor`)             | null                             |
+| labelStyle        | label styles (`visible`, `showOnSelect`, `textStyle`, `onSelectTextStyle`) | null                             |
 
 ## Contributions
 
