@@ -40,13 +40,14 @@ class BottomNavState extends md.State<BottomNav> {
   @override
   void initState() {
     currentIndex = widget.index ?? 0;
-    iconStyle = widget.iconStyle ?? IconStyle();
-    labelStyle = widget.labelStyle ?? LabelStyle();
     super.initState();
   }
 
   @override
   md.Widget build(md.BuildContext context) {
+    iconStyle = widget.iconStyle ?? IconStyle();
+    labelStyle = widget.labelStyle ?? LabelStyle();
+    
     return md.Material(
       elevation: widget.elevation,
       color: widget.color,
