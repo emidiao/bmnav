@@ -26,7 +26,7 @@ class BottomNav extends md.StatefulWidget {
     this.labelStyle,
   }) :
     assert(items != null),
-    assert(items.length >= 2);
+    //assert(items.length >= 2);
 
   @override
   BottomNavState createState() => BottomNavState();
