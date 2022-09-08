@@ -25,7 +25,7 @@ class BottomNav extends md.StatefulWidget {
     this.color = md.Colors.white,
     this.labelStyle,
   }) :
-    assert(items != null),
+    assert(items != null);
     //assert(items.length >= 2);
 
   @override
