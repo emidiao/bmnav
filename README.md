@@ -59,13 +59,3 @@ You can find a fully fledged example with navigation and custom styles [here](ht
 | color             | background color                                                           | Colors.white                     |
 | iconStyle         | icon styles (`size`, `onSelectSize`, `color`, `onSelectColor`)             | null                             |
 | labelStyle        | label styles (`visible`, `showOnSelect`, `textStyle`, `onSelectTextStyle`) | null                             |
-
-## Contributions
-
-Feel free to contribute to this project.
-
-## Support
-
-If you found this project to be useful then please consider donating to help me continue maintaining this project and create new projects. :)
-
-[![Paypal Donate Button](https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-150px.png)](https://www.paypal.me/edwnjos)
